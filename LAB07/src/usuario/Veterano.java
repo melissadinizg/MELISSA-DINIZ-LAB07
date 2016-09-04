@@ -1,9 +1,11 @@
 package usuario;
 
 import java.util.Iterator;
+import java.util.Set;
 
 import excecoes.StringInvalidaException;
 import excecoes.ValorInvalidoException;
+import jogo.Jogabilidade;
 import jogo.Jogo;
 
 public class Veterano extends Usuario {
@@ -14,6 +16,51 @@ public class Veterano extends Usuario {
 		setXp2(1000);
 	}
 
+
+	@Override
+	public int recompensar(String nomeJogo, int scoreObtido, boolean zerou) {
+		
+		// busca o jogo pelo nome
+		Jogo jogo = super.buscaJogo(nomeJogo);
+		// pega o set de jogabilidade do jogo
+		Set<Jogabilidade> lista = jogo.getJogabilidades();
+
+		for (Jogabilidade j : lista) {
+			if (j == Jogabilidade.ONLINE) {
+				super.setXp2(super.getXp2() + 10);
+			}
+			if (j == Jogabilidade.COOPERATIVO) {
+				super.setXp2(super.getXp2() + 20);
+			}
+			
+		}
+		return getXp2();
+
+	}
+
+	@Override
+	public int punir(String nomeJogo, int scoreObtido, boolean zerou) {
+		// busca o jogo pelo nome
+		Jogo jogo = super.buscaJogo(nomeJogo);
+		// pega o set de jogabilidade do jogo
+		Set<Jogabilidade> lista = jogo.getJogabilidades();
+
+		for (Jogabilidade j : lista) {
+			if (j == Jogabilidade.OFFLINE) {
+				super.setXp2(super.getXp2() - 20);
+
+			}
+			if (j == Jogabilidade.COMPETITIVO) {
+				super.setXp2(super.getXp2() - 20);
+			}
+		}
+		setXp2(getXp2() + jogo.registraJogada(scoreObtido, zerou));
+
+		return super.getXp2();
+
+
+	}
+	
 	@Override
 	public void compraJogo(Jogo jogo) throws Exception {
 		double custo = jogo.getPreco() * DESCONTO_VETERANO;
@@ -45,5 +92,7 @@ public class Veterano extends Usuario {
 		myString += "--------------------------------------------";
 		return myString;
 	}
+
+
 
 }

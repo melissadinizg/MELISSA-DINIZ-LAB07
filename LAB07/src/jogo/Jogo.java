@@ -16,6 +16,7 @@ public abstract class Jogo {
 	private int maiorScore;
 	Set<Jogabilidade> jogabilidades;
 
+	
 	public Jogo(String nome, double preco) throws StringInvalidaException, PrecoInvalidoException {
 
 		if (nome == null || nome.trim().isEmpty()) {
@@ -84,6 +85,21 @@ public abstract class Jogo {
 	public void setVezesJogadas(int novaQuantidade) {
 		this.vezesJogadas = novaQuantidade;
 	}
+	
+	/**
+	 * @return the jogabilidades
+	 */
+	public Set<Jogabilidade> getJogabilidades() {
+		return jogabilidades;
+	}
+
+	/**
+	 * @param jogabilidades the jogabilidades to set
+	 */
+	public void setJogabilidades(Set<Jogabilidade> jogabilidades) {
+		this.jogabilidades = jogabilidades;
+	}
+
 
 	@Override
 	public String toString() {

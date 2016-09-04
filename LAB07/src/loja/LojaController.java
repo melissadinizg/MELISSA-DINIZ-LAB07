@@ -26,20 +26,27 @@ public class LojaController {
 	private List<Usuario> meusUsuarios;
 	private HashMap<String, Jogabilidade> mapJogabildades;
 	private FactoryDeUsuario factoryDeUsuario;
+	private FactoryDeJogo factoryDejogo;
 	
 	public LojaController() {
 		this.meusUsuarios = new ArrayList<Usuario>();
 		this.initializeMap();
+		
 		this.factoryDeUsuario = new FactoryDeUsuario();
+		this.factoryDejogo = new FactoryDeJogo();
 	}
 	
-	public void criaUsuario(String nome, String login) throws StringInvalidaException{
-		factoryDeUsuario.criaUsuario(nome, login);
+	public Usuario criaUsuario(String nome, String login) throws StringInvalidaException{
+		return factoryDeUsuario.criaUsuario(nome, login);
+	}
+	
+	public void criaJogo(String nome, double preco, String tipo, Set<Jogabilidade> jogabilidade) throws StringInvalidaException, PrecoInvalidoException{
+		factoryDejogo.criaJogo(nome, preco, tipo, jogabilidade);
 	}
 	
 	public void adicionaUsuario(String nome, String login) {
 		try {
-			Usuario novoUser = new Noob(nome, login);
+			Usuario novoUser = criaUsuario(nome, login);
 			meusUsuarios.add(novoUser);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -61,6 +68,8 @@ public class LojaController {
 		}
 	}
 
+	
+	/**
 	public void registraJogada(String login, String nomeJogo, int score, boolean venceu) {
 		try {
 			Usuario usr = this.buscaUsuario(login);
@@ -70,6 +79,7 @@ public class LojaController {
 		}
 
 	}
+	**/
 
 	public void adicionaCredito(String login, double credito) {
 		try {

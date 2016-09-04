@@ -16,9 +16,10 @@ public abstract class Usuario {
 	private Set<Jogo> meusJogos;
 	private double credito;
 	private int xp2;
-
+	
 	public Usuario(String nome, String login) throws StringInvalidaException {
-
+	
+		
 		if (nome == null || nome.trim().isEmpty()) {
 			throw new StringInvalidaException("Nome nao pode ser nulo ou vazio.");
 		}
@@ -69,14 +70,21 @@ public abstract class Usuario {
 	public double getCredito() {
 		return this.credito;
 	}
-
+	
+	abstract int recompensar(String nomeJogo,int scoreObtido,boolean zerou);
+	
+	abstract int punir(String nomeJogo, int scoreObtido, boolean zerou);
+	
+	/**
 	public void registradaJogada(String nomeJogo, int score, boolean venceu) throws Exception {
 		Jogo jogo = this.buscaJogo(nomeJogo);
 		if (jogo == null) {
 			throw new Exception();
 		}
 		setXp2(getXp2() + jogo.registraJogada(score, venceu));
+		
 	}
+	**/
 
 	public Jogo buscaJogo(String nomeJogo) {
 		Jogo buscado = null;
